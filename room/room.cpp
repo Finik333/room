@@ -1,9 +1,8 @@
 ﻿#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
 using namespace sf;
 
-class world {
+class World {
 public:
     float dx;
     float dy;
@@ -19,9 +18,6 @@ public:
         f = 3;
     }
 };
-
-
-
 
 const int H = 17;
 const int W = 40;
@@ -45,10 +41,9 @@ String TileMap[H] = {
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 };
 
-int main()
-{
-    RenderWindow window(VideoMode(1920, 1080), L"Комната", Style::Default);
-    Texture bg,home,blocktr;
+int main() {
+    RenderWindow window(VideoMode(1920, 1080), "Комната", Style::Default);
+    Texture blocktr, bg,home;
     blocktr.loadFromFile("block.jpg");
     bg.loadFromFile("bg.png");
     home.loadFromFile("home.png");
@@ -56,51 +51,49 @@ int main()
     Sprite menuBg(bg);
     Sprite Home(home);
     menuBg.setPosition(0, 0);
-    Home.setPosition(320, 715);
-    
-    RectangleShape rectangle(Vector2f(64, 64));
-    while (window.isOpen())
-    {
+    Home.setPosition(320, 718);
+
+    while (window.isOpen()) {
         window.draw(menuBg);
         window.draw(Home);
         Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == Event::Closed)
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
                 window.close();
+            }
         }
 
         for (int i = 0; i < H; i++) {
             for (int j = 0; j < W; j++) {
-                
-                if (TileMap[i][j] == 'B') {
-                    rectangle.setFillColor(Color::Yellow);
-                }
-                else if (TileMap[i][j] == 'A') {
-                    for (int num = 0; num < 40; num++) {
-                        bt.setPosition(0, 1016);
-                        bt.setPosition(j*64, 1016);
-                        bt.setTextureRect(IntRect(256, 64, 64, 64));
-                        window.draw(bt);
-                    }
-                }
-                else if (TileMap[i][j] == '0') {
-                    rectangle.setFillColor(Color::Blue);
-                }
-                else if (TileMap[i][j] == 'Q') {
-                        bt.setPosition(j * 0, i * 64);
-                        bt.setTextureRect(IntRect(256, 64, 64, 64));
-                        window.draw(bt);  
-                }
-                else if (TileMap[i][j] == 'W') {
-                    rectangle.setFillColor(Color::Red);
-                }
-                else {
+                switch (TileMap[i][j]) {
+                case 'B':
+                    bt.setPosition(j * 64, i * 64);
+                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    window.draw(bt);
+                    break;
+                case 'A':
+                    bt.setPosition(j * 64, i * 64);
+                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    window.draw(bt);
+                    break;
+                case '0':
+                    bt.setPosition(j * 64, i * 64);
+                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    window.draw(bt);
+                    break;
+                case 'Q':
+                    bt.setPosition(j * 64, i * 64);
+                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    window.draw(bt);
+                    break;
+                case 'W':
+                    bt.setPosition(j * 64, i * 64);
+                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    window.draw(bt);
+                    break;
+                default:
                     continue;
                 }
-
-                rectangle.setPosition(j * 64, i * 64);
-                window.draw(rectangle);
             }
         }
 

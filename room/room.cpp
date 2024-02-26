@@ -2,41 +2,24 @@
 #include <SFML/Audio.hpp>
 using namespace sf;
 
-class World {
-public:
-    float dx;
-    float dy;
-    FloatRect rect;
-    Sprite sprite;
-    float f;
-
-    void Block(Texture& image) {
-        sprite.setTexture(image);
-        rect = FloatRect(3 * 64, 9 * 64, 40, 74);
-        dx = 0.1;
-        dy = 0.1;
-        f = 3;
-    }
-};
-
 const int H = 17;
 const int W = 40;
 String TileMap[H] = {
-    "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                        ",
     "W                                      W",
     "W                                      W",
     "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "W                                      W",
-    "Q                                      Q",
-    "Q                                      Q",
     "Q      0                               Q",
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 };
@@ -53,6 +36,8 @@ int main() {
     menuBg.setPosition(0, 0);
     Home.setPosition(320, 718);
 
+    sf::View view = window.getDefaultView();
+
     while (window.isOpen()) {
         window.draw(menuBg);
         window.draw(Home);
@@ -62,18 +47,25 @@ int main() {
                 window.close();
             }
         }
-
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            view.move(0.5, 0);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            view.move(-0.5, 0);
+        }
         for (int i = 0; i < H; i++) {
             for (int j = 0; j < W; j++) {
                 switch (TileMap[i][j]) {
                 case 'B':
                     bt.setPosition(j * 64, i * 64);
-                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    bt.setTextureRect(IntRect(256, 64, 64, 64));
                     window.draw(bt);
                     break;
                 case 'A':
                     bt.setPosition(j * 64, i * 64);
-                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    bt.setTextureRect(IntRect(0, 710, 64, 64));
                     window.draw(bt);
                     break;
                 case '0':
@@ -83,12 +75,12 @@ int main() {
                     break;
                 case 'Q':
                     bt.setPosition(j * 64, i * 64);
-                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    bt.setTextureRect(IntRect(0, 824, 64, 64));
                     window.draw(bt);
                     break;
                 case 'W':
                     bt.setPosition(j * 64, i * 64);
-                    bt.setTextureRect(IntRect(0, 0, 64, 64));
+                    bt.setTextureRect(IntRect(384, 254, 64, 64));
                     window.draw(bt);
                     break;
                 default:
@@ -96,7 +88,7 @@ int main() {
                 }
             }
         }
-
+        window.setView(view);
         window.display();
     }
 

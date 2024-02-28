@@ -35,7 +35,7 @@ public:
 
     PLAYER(Texture& image) {
         sprite.setTexture(image);
-        rect = FloatRect(3 * 32, 9 * 32, 40, 74);
+        rect = FloatRect(100, 64*15, 0, 64);
         dx = 0.1;
         dy = 0.1;
         f = 3;
@@ -51,7 +51,7 @@ public:
 
         if (f > 6) f -= 3;
 
-        if (side == 0) sprite.setTextureRect(IntRect(160, 0, 60, 75));
+        if (side == 0) sprite.setTextureRect(IntRect(64, 0, 60, 75));
         if (side == 1) sprite.setTextureRect(IntRect(240, 0, -60, 75));
 
         if (dx > 0) sprite.setTextureRect(IntRect(80 * int(f), 0, -60, 75));
@@ -77,7 +77,7 @@ public:
                             dy = 0;
                         }
                     }
-                    if (TileMap[i][j] == 'W') {
+                    if (TileMap[i][j] =='W') {
                         if ((dx > 0) && (dir == 0)) rect.left = j * 64 - rect.width;
                         if ((dx < 0) && (dir == 0)) rect.left = j * 64 + 64;
                         if ((dy > 0) && (dir == 1)) {
@@ -139,18 +139,17 @@ int main() {
         }
         if (Keyboard::isKeyPressed(Keyboard::A)) {
             if (view.getCenter().x - view.getSize().x / 2 > 0) {
-                view.move(-1.3, 0);
-                side = 0;
+                view.move(-1.3, 0); 
             }
-            p.sprite.move(-3.3, 0);
+            side = 1;
+            p.dx = -0.1;
         }
         if (Keyboard::isKeyPressed(Keyboard::D)) {
             if (view.getCenter().x + view.getSize().x / 2 < W * 64) {
                 view.move(1.3, 0);
-                side = 1;
-
             }
-            p.sprite.move(3.3, 0);
+            side = 0;
+            p.dx = 0.1;
         }
         if (Keyboard::isKeyPressed(Keyboard::W)) {
             if (p.onGround) { p.dy = -0.30; p.onGround = false; }
